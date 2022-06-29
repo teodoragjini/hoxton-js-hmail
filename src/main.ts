@@ -1,6 +1,20 @@
 import './style.css'
 
-const state = {
+type Email = {
+from: string;
+header: string;
+content: string;
+emailAddress: string;
+img: string;
+read: boolean;
+}
+
+type State = {
+  emails:Email[]
+}
+
+
+const state: State = {
   emails: [
     {
       from: 'Nico',
@@ -32,4 +46,21 @@ const state = {
     }
     // feel free to add more emails here
   ]
+}
+
+renderEmails()
+
+function renderEmails(){
+let header = document.querySelector(".header")
+for (let email of state.emails) {
+let img = document.createElement("img")
+img.className = "logo"
+img.src = "assets/hmail-logo.png"
+
+let input = document.createElement("input")
+input.className = "filter-input"
+input.placeholder = "Filter emails here!"
+
+header?.append(img,input)
+}
 }
