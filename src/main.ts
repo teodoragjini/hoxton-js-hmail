@@ -9,12 +9,11 @@ img: string;
 read: boolean;
 }
 
-type State = {
-  emails:Email[]
-}
+type State = Email[]
 
 
-const state: State = {
+
+const state = {
   emails: [
     {
       from: 'Nico',
@@ -48,19 +47,25 @@ const state: State = {
   ]
 }
 
-renderEmails()
+function createEmail(){
+  let ul = document.createElement('ul')
+  ul.className = 'emails-list'
 
-function renderEmails(){
-let header = document.querySelector(".header")
-for (let email of state.emails) {
-let img = document.createElement("img")
-img.className = "logo"
-img.src = "assets/hmail-logo.png"
+  ul.addEventListener('click', function () => {
+    mainEl.textContent = '';
+    item.read = true 
+    textContent(item)
+  })
 
-let input = document.createElement("input")
-input.className = "filter-input"
-input.placeholder = "Filter emails here!"
+  let li = document.createElement('li')
+  li.className = 'emails-list__item'
 
-header?.append(img,input)
-}
+  let span = document.createElement('span')
+  span.className = 'emails-list__item__read-icon material-symbols-outlined'
+  span.textContent = 'mark_email_unread'
+
+  let img = document.createElement('img')
+  
+
+
 }
