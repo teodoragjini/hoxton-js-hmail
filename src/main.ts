@@ -61,7 +61,7 @@ function renderEmailListItem(email:Email, ul:HTMLUListElement) {
   li.className = email.read ? 'emails-list__item read' : 'emails-list__item'
   li.addEventListener('click', function () {
     selectEmail(email)
-    renderEmailList()
+    render()
   })
 
   let readSpan = document.createElement('span')
@@ -104,3 +104,14 @@ function renderEmailList() {
 
   main.append(h1El, ul);
 }
+
+function renderEmailDetails(){
+
+}
+
+function render(){
+  if(state.selectedEmail) renderEmailDetails()
+  else renderEmailList()
+}
+
+render()
