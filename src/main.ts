@@ -56,6 +56,10 @@ function selectEmail(email:Email){
   state.selectedEmail = email
 }
 
+function deselectEmail() {
+  state.selectedEmail = null
+}
+
 function renderEmailListItem(email:Email, ul:HTMLUListElement) {
   let li = document.createElement('li')
   li.className = email.read ? 'emails-list__item read' : 'emails-list__item'
@@ -106,12 +110,60 @@ function renderEmailList() {
 }
 
 function renderEmailDetails(){
+let main = document.querySelector('main')
+if(main === null) return
+if(state.selectedEmail === null) return 
+main.textContent = ''
 
+let backButton = document.createElement('button')
+backButton.textContent = 'BACK'
+backButton.addEventListener('click', function(){
+  deselectEmail()
+  render()
+})
+
+let h1 = document.createElement('h1')
+h1.textContent = state.selectedEmail.from
+
+let img = document.createElement('img')
+img.className = 'email-details__image'
+img.src = state.selectedEmail.img
+
+let h2 = document.createElement('h2')
+h2.className = 'email-details__header'
+h2.textContent = state.selectedEmail.header
+
+let p = document.createElement('p')
+p.className = 'email-details__content'
+p.textContent = state.selectedEmail.content
+
+main.append(backButton, h1, img, h2, p)
 }
 
 function render(){
   if(state.selectedEmail) renderEmailDetails()
   else renderEmailList()
 }
+
+function getFilteredEmails() {
+  return state.emails.filter(
+
+    email => {
+      email.content.toLowerCase().includes(state.filter.toLowerCase())
+      email.from.toLowerCase().includes(state.filter.toLowerCase())
+    }
+  )
+}
+
+let input = document.querySelector<HTMLInputElement>('.filter-input')
+if(input) {
+  input.addEventListener('keyup', function(event) {
+    if(input == null) return
+    if(event.key !== 'Enter') return
+
+    state.filter = input.value
+  })
+}
+
 
 render()
